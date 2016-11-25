@@ -63,7 +63,8 @@ function sendGenericMessage(sender) {
                     "buttons": [{
                         "type": "web_url",
                         "url": "https://www.messenger.com",
-                        "title": "web url"
+                        "title": "web url hwllo",
+                        "webview_height_ratio": "compact"
                     }, {
                         "type": "postback",
                         "title": "Postback",
