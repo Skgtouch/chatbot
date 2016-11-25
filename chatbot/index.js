@@ -4,7 +4,9 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
+const process = require('process');
 
+const token = process.env.FB_PAGE_ACCESS_TOKEN;
 app.set('port', (process.env.PORT || 5000))
 
 // Process application/x-www-form-urlencoded
@@ -100,32 +102,8 @@ function sendGenericMessage(sender) {
 
 
 function sendTextMessage(sender, text) {
-    //let messageData = { text:text }
-    let messageData = {
-        "attachment":{
-            "type":"template",
-            "payload":{
-              "template_type":"generic",
-              "elements":[
-                {
-                  "title":"Classic White T-Shirt",
-                  "item_url":"https://petersfancyapparel.com/classic_white_tshirt",
-                  "image_url":"https://petersfancyapparel.com/classic_white_tshirt.png",
-                  "subtitle":"Soft white cotton t-shirt is back in style",
-                  "buttons":[
-                    {
-                      "type":"web_url",
-                      "url":"https://petersfancyapparel.com/classic_white_tshirt",
-                      "title":"View Item",
-                      "webview_height_ratio":"tall"
-                    }
-                  ]
-                }
-              ]
-            }
-          }
-        };
-    
+    let messageData = { text:text }
+            
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:token},
@@ -143,7 +121,6 @@ function sendTextMessage(sender, text) {
     })
 }
 
-const token = "EAAE8weXTAi0BAL2MZAaG7wV0MEVD8w49bBvO6ql2OLZA1aB1SVeSntJ7vyOl7V5CAchAMGOXHKqIRvPVuYG6OvKiOSDsEZC7vJ7akCZBLXD2u9PjKEcsDPClQKqQdZAZCBCevubxLAdCaAUBD0GDD2qCUfChBhOp3mhvHKyTRJqQZDZD"
 
 // Spin up the server
 app.listen(app.get('port'), function() {
