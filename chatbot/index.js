@@ -5,10 +5,12 @@ const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
 const process = require('process');
+const path    = require("path");
 
 const token = process.env.FB_PAGE_ACCESS_TOKEN;
 app.set('port', (process.env.PORT || 5000))
 
+app.use(express.static(__dirname + '/View'));
 // Process application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}))
 
@@ -18,6 +20,10 @@ app.use(bodyParser.json())
 // Index route
 app.get('/', function (req, res) {
     res.send('Hello world, I am a chat bot')
+})
+
+app.get('/selectmenu', function (req, res) {
+	res.sendFile('select.html');
 })
 
 // for Facebook verification
@@ -42,7 +48,7 @@ app.post('/webhook/', function (req, res) {
         }
         
         if (text.match(/Hi|Hello|Hey|Heyy|Heyya/gi)) {
-        	//sendTextMessage(sender, "Hello, How can I help you /n Please select the menu!!!");
+        	//sendTextMessage(sender, "Hello, How can I help you? Please select the menu!!!");
 			sendGenericMessage(sender);
             continue
         }
@@ -63,12 +69,13 @@ function sendGenericMessage(sender) {
     		      "type":"template",
     		      "payload":{
     		        "template_type":"button",
-    		        "text":"Please check our Menu Details!!! ",
+    		        "text":"Hello, How can I help you? Please select the menu!!! ",
     		        "buttons":[
     		          {
-    		            "type":"postback",
-    		            "title":"Select Menu Item",
-    		            "payload":"Menu"
+    		        	  "type":"web_url",
+    		              "url":"https://skgtouch.herokuapp.com/selectmenu",
+    		              "title":"Select Criteria",
+    		              "webview_height_ratio": "compact"
     		          }
     		        ]
     		      }
