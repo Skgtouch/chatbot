@@ -64,11 +64,11 @@ function sendGenericMessage(sender) {
     		      "type":"template",
     		      "payload":{
     		        "template_type":"button",
-    		        "text":"Menu",
+    		        "text":"Please check our Menu Details!!! ",
     		        "buttons":[
     		          {
     		            "type":"postback",
-    		            "title":"Please check our Menu Details!!! ",
+    		            "title":"Select Menu Item",
     		            "payload":"Menu"
     		          }
     		        ]
@@ -82,10 +82,7 @@ function sendGenericMessage(sender) {
         method: 'POST',
         json: {
             recipient: {id:sender},
-            message: messageData,
-            setting_type : "domain_whitelisting",
-            whitelisted_domains : ["https://skgtouch.herokuapp.com"],
-            domain_action_type: "add"
+            message: messageData
         }
     }, function(error, response, body) {
         if (error) {
