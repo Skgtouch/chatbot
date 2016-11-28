@@ -42,7 +42,7 @@ app.post('/webhook/', function (req, res) {
         }
         
         if (text.match('/[Hi|Hello|Hey|Heyy|Heyya]/gi')) {
-        	sendTextMessage(sender, "Hello, How can I help you /n Please select the menu!!!"));
+        	sendTextMessage(sender, "Hello, How can I help you /n Please select the menu!!!");
 			sendGenericMessage(sender);
             continue
         }
@@ -82,7 +82,10 @@ function sendGenericMessage(sender) {
         method: 'POST',
         json: {
             recipient: {id:sender},
-            message: messageData
+            message: messageData,
+            setting_type : "domain_whitelisting",
+            whitelisted_domains : ["https://skgtouch.herokuapp.com"],
+            domain_action_type: "add"
         }
     }, function(error, response, body) {
         if (error) {
