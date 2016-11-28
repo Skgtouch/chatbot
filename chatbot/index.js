@@ -35,15 +35,22 @@ app.get('/webhook/', function (req, res) {
       let sender = event.sender.id
       if (event.message && event.message.text) {
         let text = event.message.text
-        if (text === 'Generic') {
-            sendGenericMessage(sender)
+
+        if (text === 'Menu') {
+        	sendMenuItem(sender)
             continue
         }
-        sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+        
+        if (text.match('/[Hi|Hello|Hey|Heyy|Heyya]/gi')) {
+        	sendTextMessage(sender, "Hello, How can I help you /n Please select the menu!!!"));
+			sendGenericMessage(sender);
+            continue
+        }
+        
       }
       if (event.postback) {
         let text = JSON.stringify(event.postback)
-        sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
+        sendMenuItem(sender, token)
         continue
       }
     }
@@ -52,37 +59,48 @@ app.get('/webhook/', function (req, res) {
 
 function sendGenericMessage(sender) {
     let messageData = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [{
-                    "title": "First card",
-                    "subtitle": "Element #1 of an hscroll",
-                    "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
-                    "buttons": [{
-                        "type": "web_url",
-                        "url": "https://www.messenger.com",
-                        "title": "web url hwllo",
-                        "webview_height_ratio": "compact"
-                    }, {
-                        "type": "postback",
-                        "title": "Postback",
-                        "payload": "Payload for first element in a generic bubble",
-                    }],
-                }, {
-                    "title": "Second card",
-                    "subtitle": "Element #2 of an hscroll",
-                    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
-                    "buttons": [{
-                        "type": "postback",
-                        "title": "Postback",
-                        "payload": "Payload for second element in a generic bubble",
-                    }],
-                }]
-            }
-        }
+    		"message":{
+    		    "attachment":{
+    		      "type":"template",
+    		      "payload":{
+    		        "template_type":"button",
+    		        "text":"Menu",
+    		        "buttons":[
+    		          {
+    		            "type":"postback",
+    		            "title":"Please check our Menu Details!!! ",
+    		            "payload":"Menu"
+    		          }
+    		        ]
+    		      }
+    		    }
+    		  }
     }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+            "setting_type" : "domain_whitelisting",
+            "whitelisted_domains" : ["https://skgtouch.herokuapp.com"],
+            "domain_action_type": "add"
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
+
+// Menu Message 
+
+function sendMenuItem(sender) {
+    let messageData = { text:"Success" }
+            
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:token},
@@ -98,8 +116,9 @@ function sendGenericMessage(sender) {
             console.log('Error: ', response.body.error)
         }
     })
-}
+} 
 
+/********End MEnu***********/
 
 
 function sendTextMessage(sender, text) {
