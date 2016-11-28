@@ -42,7 +42,7 @@ app.post('/webhook/', function (req, res) {
         }
         
         if (text.match(/Hi|Hello|Hey|Heyy|Heyya/gi)) {
-        	sendTextMessage(sender, "Hello, How can I help you /n Please select the menu!!!");
+        	//sendTextMessage(sender, "Hello, How can I help you /n Please select the menu!!!");
 			sendGenericMessage(sender);
             continue
         }
