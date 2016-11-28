@@ -59,7 +59,6 @@ app.post('/webhook/', function (req, res) {
 
 function sendGenericMessage(sender) {
     let messageData = {
-    		"message":{
     		    "attachment":{
     		      "type":"template",
     		      "payload":{
@@ -75,7 +74,7 @@ function sendGenericMessage(sender) {
     		      }
     		    }
     		  }
-    }
+    
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:token},
