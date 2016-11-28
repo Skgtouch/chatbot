@@ -10,7 +10,7 @@ const path    = require("path");
 const token = process.env.FB_PAGE_ACCESS_TOKEN;
 app.set('port', (process.env.PORT || 5000))
 
-app.use(express.static(__dirname + '/View'));
+app.use(express.static(__dirname + '/view'));
 // Process application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}))
 
