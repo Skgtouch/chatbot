@@ -28,16 +28,16 @@ app.get('/webhook/', function (req, res) {
     res.send('Error, wrong token')
 })
 
-  app.post('/webhook/', function (req, res) {
+app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging
     for (let i = 0; i < messaging_events.length; i++) {
       let event = req.body.entry[0].messaging[i]
       let sender = event.sender.id
       if (event.message && event.message.text) {
-        let text = event.message.text
+        let text = event.message.text;
 
         if (text === 'Menu') {
-        	sendMenuItem(sender)
+        	sendMenuItem(sender);
             continue
         }
         
@@ -50,7 +50,7 @@ app.get('/webhook/', function (req, res) {
       }
       if (event.postback) {
         let text = JSON.stringify(event.postback)
-        sendMenuItem(sender, token)
+        sendMenuItem(sender, token);
         continue
       }
     }
@@ -83,9 +83,9 @@ function sendGenericMessage(sender) {
         json: {
             recipient: {id:sender},
             message: messageData,
-            "setting_type" : "domain_whitelisting",
-            "whitelisted_domains" : ["https://skgtouch.herokuapp.com"],
-            "domain_action_type": "add"
+            setting_type : "domain_whitelisting",
+            whitelisted_domains : ["https://skgtouch.herokuapp.com"],
+            domain_action_type: "add"
         }
     }, function(error, response, body) {
         if (error) {
