@@ -10,7 +10,7 @@ const path    = require("path");
 const token = process.env.FB_PAGE_ACCESS_TOKEN;
 app.set('port', (process.env.PORT || 5000))
 
-app.use(express.static(__dirname + '/view'));
+console.log(path.resolve(__dirname+'/view/select.html'));
 // Process application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}))
 
@@ -23,7 +23,7 @@ app.get('/', function (req, res) {
 })
 
 app.get('/selectmenu', function (req, res) {
-	res.sendFile('select.html');
+	res.sendFile(path.resolve(__dirname+'/view/select.html'));
 })
 
 // for Facebook verification
