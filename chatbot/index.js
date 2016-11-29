@@ -64,7 +64,7 @@ app.post('/webhook/', function (req, res) {
   })
 
 function sendGenericMessage(sender) {
-    let messageData = {
+/*    let messageData = {
     		    "attachment":{
     		      "type":"template",
     		      "payload":{
@@ -75,12 +75,44 @@ function sendGenericMessage(sender) {
     		        	  "type":"web_url",
     		              "url":"https://skgtouch.herokuapp.com/selectmenu",
     		              "title":"Select Criteria",
-    		              "webview_height_ratio": "compact"
+    		              "webview_height_ratio": "compact"	
     		          }
     		        ]
     		      }
     		    }
-    		  }
+    		  }*/
+	
+	let messageData = {
+		    "text":"Pick a menu:",
+		    "quick_replies":[
+		      {
+		        "content_type":"text",
+		        "title":"Baking",
+		        "payload":"baking"
+		      },
+		      {
+		        "content_type":"text",
+		        "title":"Desert",
+		        "payload":"desert"
+		      },
+		      {
+			        "content_type":"text",
+			        "title":"Meat",
+			        "payload":"meat"
+			  },
+		      {
+			   "content_type":"text",
+			    "title":"Seafood",
+			    "payload":"seafood"
+			   },
+			   }
+			   "content_type":"text",
+			    "title":"Inspiration",
+			    "payload":"inspiration"
+			   }
+			        
+		    ]
+		  }
     
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
