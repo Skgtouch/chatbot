@@ -105,7 +105,7 @@ function sendGenericMessage(sender) {
 			    "title":"Seafood",
 			    "payload":"seafood"
 			   },
-			   }
+			   {
 			   "content_type":"text",
 			    "title":"Inspiration",
 			    "payload":"inspiration"
