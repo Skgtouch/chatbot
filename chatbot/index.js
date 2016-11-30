@@ -41,11 +41,6 @@ app.post('/webhook/', function (req, res) {
       let sender = event.sender.id
       if (event.message && event.message.text) {
         let text = event.message.text;
-
-        if (text === 'seafood') {
-        	sendMenuItem(sender);
-            continue
-        }
         
         if (text.match(/Hi|Hello|Hey|Heyy|Heyya/gi)) {
         	//sendTextMessage(sender, "Hello, How can I help you? Please select the menu!!!");
@@ -54,9 +49,15 @@ app.post('/webhook/', function (req, res) {
         }
         
       }
-      if (event.postback) {
-        let text = JSON.stringify(event.postback)
-        sendMenuItem(sender, token);
+      if (event.postback  && event.postback.payload) {
+        let text = event.postback.payload;
+        switch(text)
+         {
+        case 'seafood' : sendMenuItem(sender);
+        break;
+        
+         }
+        
         continue
       }
     }
