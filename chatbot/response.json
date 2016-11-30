@@ -1,0 +1,11 @@
+{
+	"hi" : {
+			"type" : "text",
+			"print" : "Hi Champ!!!"
+	},
+	"How are you?" : {
+			"type" : "text",
+			"print" : "I am good. How about you?"
+	}
+
+}

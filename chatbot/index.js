@@ -10,6 +10,7 @@ const path    = require("path");
 /*****Load JSON****/
 const articles = require('./artical.json');
 const menus = require('./menu.json'); /** Max 11 menus can be shown  **/
+const response = require('./response.json');
 
 
 const token = process.env.FB_PAGE_ACCESS_TOKEN;
@@ -48,9 +49,19 @@ app.post('/webhook/', function (req, res) {
         let text = event.message.text;
         
         if (text.match(/Hi|Hello|Hey|Heyy|Heyya/gi)) {
-			sendMenuItems(sender);
-            continue
+        	sendMenuItems(sender);
+        	continue
         }
+        
+        let responseDetails = response[text];
+        
+        if(responseDetails.type === 'text'){
+        	sendTextMessage(sender,responseDetails.print);
+        }else if (responseDetails.type === 'generic'){
+        	
+        }
+        
+       
         
       }
       if (event.message  && event.message.quick_reply.payload) {  
