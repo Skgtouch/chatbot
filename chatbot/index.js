@@ -6,7 +6,7 @@ const request = require('request')
 const app = express()
 const process = require('process');
 const path    = require("path");
-
+const articals = require('./artical.json');
 const token = process.env.FB_PAGE_ACCESS_TOKEN;
 app.set('port', (process.env.PORT || 5000))
 
@@ -50,15 +50,10 @@ app.post('/webhook/', function (req, res) {
         
       }
       if (event.message  && event.message.quick_reply) {
+    	  
         let payload = event.message.quick_reply.payload;
-        switch(payload)
-         {
-         case 'seafood' : sendTextMessage(sender,payload);
-         break;
-         
-         default:  sendTextMessage(sender,'default');
-         }
-        
+        let elements = articals[payload];
+        sendMenuItem(sender,elements);   
         continue
       }
     }
@@ -138,68 +133,13 @@ function sendGenericMessage(sender) {
 
 // Menu Message 
 
-function sendMenuItem(sender) {
+function sendMenuItem(sender,elements) {
     let messageData = {
     	    "attachment":{
     	        "type":"template",
     	        "payload":{
     	          "template_type":"generic",
-    	          "elements":[
-    	            {
-    	              "title":"Pasta with Monkfish & Mussels",
-    	              "item_url":"http://www.aol.co.uk/living/food/pasta-with-monkfish-and-mussels/121/",
-    	              "image_url":"http://o.aolcdn.com/os/ukmedia/aoluk/recipes/Recipe_121.jpg",
-    	              "subtitle":"We\'ve got the this for everyone.",
-    	              "buttons":[
-    	                {
-    	                  "type":"web_url",
-    	                  "url":"http://www.aol.co.uk/living/food/pasta-with-monkfish-and-mussels/121/",
-    	                  "title":"View Website"
-    	                },
-    	                {
-    	                  "type":"postback",
-    	                  "title":"Start Chatting",
-    	                  "payload":"need more menu"
-    	                }              
-    	              ]
-    	            },
-    	            {
-      	              "title":"Pasta with Monkfish & Mussels",
-      	              "item_url":"http://www.aol.co.uk/living/food/pasta-with-monkfish-and-mussels/121/",
-      	              "image_url":"http://o.aolcdn.com/os/ukmedia/aoluk/recipes/Recipe_121.jpg",
-      	              "subtitle":"We\'ve got the this for everyone.",
-      	              "buttons":[
-      	                {
-      	                  "type":"web_url",
-      	                  "url":"http://www.aol.co.uk/living/food/pasta-with-monkfish-and-mussels/121/",
-      	                  "title":"View Website"
-      	                },
-      	                {
-      	                  "type":"postback",
-      	                  "title":"Start Chatting",
-      	                  "payload":"need more menu"
-      	                }              
-      	              ]
-      	            },
-    	            {
-      	              "title":"Pasta with Monkfish & Mussels",
-      	              "item_url":"http://www.aol.co.uk/living/food/pasta-with-monkfish-and-mussels/121/",
-      	              "image_url":"http://o.aolcdn.com/os/ukmedia/aoluk/recipes/Recipe_121.jpg",
-      	              "subtitle":"We\'ve got the this for everyone.",
-      	              "buttons":[
-      	                {
-      	                  "type":"web_url",
-      	                  "url":"http://www.aol.co.uk/living/food/pasta-with-monkfish-and-mussels/121/",
-      	                  "title":"View Website"
-      	                },
-      	                {
-      	                  "type":"postback",
-      	                  "title":"Start Chatting",
-      	                  "payload":"need more menu"
-      	                }              
-      	              ]
-      	            }
-    	          ]
+    	          "elements":elements
     	        }
     	      }
     	    }
