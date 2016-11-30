@@ -1,0 +1,32 @@
+/*********** Max 11 menus can be added **************/
+{
+    "text":"Pick a menu:",
+    "quick_replies":[
+      {
+        "content_type":"text",
+        "title":"Baking",
+        "payload":"baking"
+      },
+      {
+        "content_type":"text",
+        "title":"Desert",
+        "payload":"desert"
+      },
+      {
+	        "content_type":"text",
+	        "title":"Meat",
+	        "payload":"meat"
+	  },
+      {
+	   "content_type":"text",
+	    "title":"Seafood",
+	    "payload":"seafood"
+	   },
+	   {
+	   "content_type":"text",
+	    "title":"Inspiration",
+	    "payload":"inspiration"
+	   }
+	        
+    ]
+}

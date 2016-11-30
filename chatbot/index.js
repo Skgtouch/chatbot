@@ -6,7 +6,12 @@ const request = require('request')
 const app = express()
 const process = require('process');
 const path    = require("path");
-const articals = require('./artical.json');
+
+/*****Load JSON****/
+const articles = require('./artical.json');
+const menus = require('./menu.json');
+
+
 const token = process.env.FB_PAGE_ACCESS_TOKEN;
 app.set('port', (process.env.PORT || 5000))
 
@@ -52,8 +57,8 @@ app.post('/webhook/', function (req, res) {
       if (event.message  && event.message.quick_reply) {
     	  
         let payload = event.message.quick_reply.payload;
-        let elements = articals[payload];
-        sendMenuItem(sender,elements);   
+        let elements = articles[payload];
+        sendMenuArticle(sender,elements);   
         continue
       }
     }
@@ -61,55 +66,8 @@ app.post('/webhook/', function (req, res) {
   })
 
 function sendGenericMessage(sender) {
-/*    let messageData = {
-    		    "attachment":{
-    		      "type":"template",
-    		      "payload":{
-    		        "template_type":"button",
-    		        "text":"Hello, How can I help you? Please select the menu!!! ",
-    		        "buttons":[
-    		          {
-    		        	  "type":"web_url",
-    		              "url":"https://skgtouch.herokuapp.com/selectmenu",
-    		              "title":"Select Criteria",
-    		              "webview_height_ratio": "compact"	
-    		          }
-    		        ]
-    		      }
-    		    }
-    		  }*/
 	
-	let messageData = {
-		    "text":"Pick a menu:",
-		    "quick_replies":[
-		      {
-		        "content_type":"text",
-		        "title":"Baking",
-		        "payload":"baking"
-		      },
-		      {
-		        "content_type":"text",
-		        "title":"Desert",
-		        "payload":"desert"
-		      },
-		      {
-			        "content_type":"text",
-			        "title":"Meat",
-			        "payload":"meat"
-			  },
-		      {
-			   "content_type":"text",
-			    "title":"Seafood",
-			    "payload":"seafood"
-			   },
-			   {
-			   "content_type":"text",
-			    "title":"Inspiration",
-			    "payload":"inspiration"
-			   }
-			        
-		    ]
-		  }
+	let messageData = menus;
     
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
@@ -133,7 +91,7 @@ function sendGenericMessage(sender) {
 
 // Menu Message 
 
-function sendMenuItem(sender,elements) {
+function sendMenuArticle(sender,elements) {
     let messageData = {
     	    "attachment":{
     	        "type":"template",
