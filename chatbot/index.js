@@ -19,7 +19,7 @@ app.use(bodyParser.json())
 
 // Index route
 app.get('/', function (req, res) {
-    res.send('Hello world, I am a chat bot')
+    res.send('Hello world, I am a chat bot as')
 })
 
 app.get('/selectmenu', function (req, res) {
@@ -53,9 +53,10 @@ app.post('/webhook/', function (req, res) {
         let text = event.postback.payload;
         switch(text)
          {
-        case 'seafood' : sendMenuItem(sender);
-        break;
-        
+         case 'seafood' : sendTextMessage(sender,text);
+         break;
+         
+         default:  sendTextMessage(sender,'default');
          }
         
         continue
