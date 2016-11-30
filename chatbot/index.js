@@ -49,8 +49,8 @@ app.post('/webhook/', function (req, res) {
         }
         
       }
-      if (event.postback  && event.postback.payload) {
-        let text = event.postback.payload;
+      if (event.message  && event.message.quick_reply) {
+        let text = event.postback.quick_reply.payload;
         switch(text)
          {
          case 'seafood' : sendTextMessage(sender,text);
