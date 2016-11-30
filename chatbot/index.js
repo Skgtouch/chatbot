@@ -9,7 +9,7 @@ const path    = require("path");
 
 /*****Load JSON****/
 const articles = require('./artical.json');
-const menus = require('./menu.json');
+const menus = require('./menu.json'); /** Max 11 menus can be shown  **/
 
 
 const token = process.env.FB_PAGE_ACCESS_TOKEN;
@@ -48,14 +48,12 @@ app.post('/webhook/', function (req, res) {
         let text = event.message.text;
         
         if (text.match(/Hi|Hello|Hey|Heyy|Heyya/gi)) {
-        	//sendTextMessage(sender, "Hello, How can I help you? Please select the menu!!!");
-			sendGenericMessage(sender);
+			sendMenuItems(sender);
             continue
         }
         
       }
-      if (event.message  && event.message.quick_reply) {
-    	  
+      if (event.message  && event.message.quick_reply.payload) {  
         let payload = event.message.quick_reply.payload;
         let elements = articles[payload];
         sendMenuArticle(sender,elements);   
@@ -65,28 +63,11 @@ app.post('/webhook/', function (req, res) {
     res.sendStatus(200)
   })
 
-function sendGenericMessage(sender) {
+function sendMenuItems(sender) {
 	
 	let messageData = menus;
     
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token:token},
-        method: 'POST',
-        json: {
-            recipient: {id:sender},
-            message: messageData,
-            setting_type : "domain_whitelisting",
-            whitelisted_domains : ["https://skgtouch.herokuapp.com"],
-            domain_action_type: "add"
-        }
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    })
+	sendApi(sender,messageData)
 }
 
 // Menu Message 
@@ -102,7 +83,23 @@ function sendMenuArticle(sender,elements) {
     	      }
     	    }
             
-    request({
+    sendApi(sender,messageData)
+} 
+
+/********End MEnu***********/
+
+
+function sendTextMessage(sender, text) {
+    let messageData = { text:text }
+            
+    sendApi(sender,messageData);
+}
+
+
+/***** Call send API ******/
+
+function sendApi(sender,messageData){
+	request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:token},
         method: 'POST',
@@ -118,30 +115,6 @@ function sendMenuArticle(sender,elements) {
         }
     })
 } 
-
-/********End MEnu***********/
-
-
-function sendTextMessage(sender, text) {
-    let messageData = { text:text }
-            
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token:token},
-        method: 'POST',
-        json: {
-            recipient: {id:sender},
-            message: messageData,
-        }
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    })
-}
-
 
 // Spin up the server
 app.listen(app.get('port'), function() {
