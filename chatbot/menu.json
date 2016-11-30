@@ -1,5 +1,5 @@
 {
-    "text":"Pick a menu:",
+    "text":"Hello, I have got some interesting recipes for you. Chose one of them  ",
     "quick_replies":[
       {
         "content_type":"text",

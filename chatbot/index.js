@@ -64,9 +64,7 @@ app.post('/webhook/', function (req, res) {
   })
 
 function sendMenuItems(sender) {
-	
-	let messageData = menus;
-    
+	let messageData = menus; 
 	sendApi(sender,messageData)
 }
 
@@ -82,7 +80,7 @@ function sendMenuArticle(sender,elements) {
     	        }
     	      }
     	    }
-            
+    
     sendApi(sender,messageData)
 } 
 
@@ -90,8 +88,7 @@ function sendMenuArticle(sender,elements) {
 
 
 function sendTextMessage(sender, text) {
-    let messageData = { text:text }
-            
+    let messageData = { text:text }        
     sendApi(sender,messageData);
 }
 
