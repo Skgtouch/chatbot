@@ -48,14 +48,12 @@ app.post('/webhook/', function (req, res) {
       let sender = event.sender.id
       if (event.message && event.message.text) {
         let text = event.message.text;
-        
+        let responseDetails = response[text];
         if (text.match(/Hi|Hello|Hey|Heyy|Heyya/gi)) {
         	sendMenuItems(sender);
         	continue
         }
-        
-        let responseDetails = response[text];
-        if(responseDetails && responseDetails.lenght > 0){
+        else if(responseDetails && responseDetails.lenght > 0){
 	        if(responseDetails.type === 'text'){
 	        	sendTextMessage(sender,responseDetails.print);
 	        }else if (responseDetails.type === 'generic'){
