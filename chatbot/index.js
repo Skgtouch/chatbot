@@ -55,12 +55,14 @@ app.post('/webhook/', function (req, res) {
         }
         
         let responseDetails = response[text];
-        if(responseDetails.type){
+        if(responseDetails && responseDetails.lenght > 0){
 	        if(responseDetails.type === 'text'){
 	        	sendTextMessage(sender,responseDetails.print);
 	        }else if (responseDetails.type === 'generic'){
 	        	
 	        }
+        }else{
+        	sendTextMessage(sender,"Sorry I couldn't hear you.Please be specific!!!");
         }
         
        
