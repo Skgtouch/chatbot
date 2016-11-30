@@ -55,11 +55,12 @@ app.post('/webhook/', function (req, res) {
         }
         
         let responseDetails = response[text];
-        
-        if(responseDetails.type === 'text'){
-        	sendTextMessage(sender,responseDetails.print);
-        }else if (responseDetails.type === 'generic'){
-        	
+        if(responseDetails.type){
+	        if(responseDetails.type === 'text'){
+	        	sendTextMessage(sender,responseDetails.print);
+	        }else if (responseDetails.type === 'generic'){
+	        	
+	        }
         }
         
        
