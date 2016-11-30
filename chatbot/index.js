@@ -50,10 +50,10 @@ app.post('/webhook/', function (req, res) {
         
       }
       if (event.message  && event.message.quick_reply) {
-        let text = event.message.quick_reply.payload;
-        switch(text)
+        let payload = event.message.quick_reply.payload;
+        switch(payload)
          {
-         case 'seafood' : sendTextMessage(sender,text);
+         case 'seafood' : sendTextMessage(sender,payload);
          break;
          
          default:  sendTextMessage(sender,'default');
