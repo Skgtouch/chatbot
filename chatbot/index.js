@@ -64,7 +64,7 @@ app.post('/webhook/', function (req, res) {
 		        }
 	        }
        }
-      if (event.message  && event.message.quick_reply) {  
+      else if (event.message  && event.message.quick_reply) {  
         let payload = event.message.quick_reply.payload;
         let elements = articles[payload];
         sendMenuArticle(sender,elements);   
