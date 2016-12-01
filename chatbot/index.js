@@ -46,7 +46,13 @@ app.post('/webhook/', function (req, res) {
     for (let i = 0; i < messaging_events.length; i++) {
       let event = req.body.entry[0].messaging[i]
       let sender = event.sender.id
-      if (event.message && event.message.text) {
+      if (event.message  && event.message.quick_reply) {  
+          let payload = event.message.quick_reply.payload;
+          let elements = articles[payload];
+          sendMenuArticle(sender,elements);   
+          continue
+      }
+      else if (event.message && event.message.text) {
 	        let text = event.message.text;
 	        if (text.match(/Hi|Hello|Hey|Heyy|Heyya/gi)) {
 	        	sendMenuItems(sender);
@@ -64,12 +70,7 @@ app.post('/webhook/', function (req, res) {
 		        }
 	        }
        }
-      else if (event.message  && event.message.quick_reply) {  
-        let payload = event.message.quick_reply.payload;
-        let elements = articles[payload];
-        sendMenuArticle(sender,elements);   
-        continue
-      }
+
     }
     res.sendStatus(200)
   })
