@@ -1,9 +1,9 @@
 {
-	"hi" : {
+	"greeting" : {
 			"type" : "text",
 			"print" : "Hi Champ!!!"
 	},
-	"How are you?" : {
+	"asking" : {
 			"type" : "text",
 			"print" : "I am good. How about you?"
 	}

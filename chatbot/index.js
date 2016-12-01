@@ -47,25 +47,22 @@ app.post('/webhook/', function (req, res) {
       let event = req.body.entry[0].messaging[i]
       let sender = event.sender.id
       if (event.message && event.message.text) {
-        let text = event.message.text;
-        let responseDetails = response[text];
-        if (text.match(/Hi|Hello|Hey|Heyy|Heyya/gi)) {
-        	sendMenuItems(sender);
-        	continue
-        }
-        else if(responseDetails && responseDetails.lenght > 0){
-	        if(responseDetails.type === 'text'){
-	        	sendTextMessage(sender,responseDetails.print);
-	        }else if (responseDetails.type === 'generic'){
-	        	
+	        let text = event.message.text;
+	        if (text.match(/Hi|Hello|Hey|Heyy|Heyya/gi)) {
+	        	sendMenuItems(sender);
+	        	continue
 	        }
-        }else{
-        	sendTextMessage(sender,"Sorry I couldn't hear you.Please be specific!!!");
-        }
-        
-       
-        
-      }
+	        else {
+        		let generalText = getGeneralText(text);        
+        		let responseDetails = response[generalText];
+		        if(responseDetails.type === 'text'){
+		        	sendTextMessage(sender,responseDetails.print);
+		        }else if (responseDetails.type === 'generic'){
+		        	
+		        }else {sendTextMessage(sender,"Sorry I couldn't hear you.Please be specific!!!");
+		        }
+	        }
+       }
       if (event.message  && event.message.quick_reply) {  
         let payload = event.message.quick_reply.payload;
         let elements = articles[payload];
@@ -103,6 +100,17 @@ function sendMenuArticle(sender,elements) {
 function sendTextMessage(sender, text) {
     let messageData = { text:text }        
     sendApi(sender,messageData);
+}
+
+
+function getGeneralText(text){
+	let result;
+	if(text.match(/How are you |How you doing /gi)){
+		result = 'asking';
+	}
+	
+	return result;
+	
 }
 
 
