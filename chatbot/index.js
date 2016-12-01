@@ -107,7 +107,7 @@ function sendTextMessage(sender, text) {
 
 function getGeneralText(text){
 	let result;
-	if(text.match(/How are you |How you doing /gi)){
+	if(text.match(/[How are you] |[How you doing] /gi)){
 		result = 'asking';
 	}else{
 		result = 'greeting'
