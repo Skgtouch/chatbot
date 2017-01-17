@@ -66,7 +66,7 @@ app.post('/webhook/', function (req, res) {
 		        	sendTextMessage(sender,responseDetails.print);
 		        }else if (responseDetails && responseDetails.type === 'generic'){
 		        	
-		        }else {sendTextMessage(sender,"Sorry I couldn't hear you.Please be specific!!!");
+		        }else {sendTextMessage(sender,"Sorry I couldn't hear you.Please be specific!!! For more details type 'Help'");
 		        }
 	        }
        }
@@ -110,7 +110,7 @@ function getGeneralText(text){
 	if(text.match(/[How are you] |[How you doing] /gi)){
 		result = 'asking';
 	}else{
-		result = 'greeting'
+		result = 'help'
 	}
 	
 	return result;

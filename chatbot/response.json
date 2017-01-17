@@ -1,7 +1,7 @@
 {
-	"greeting" : {
+	"help" : {
 			"type" : "text",
-			"print" : "Hi Champ!!!"
+			"print" : "Please send you 'Hi', We will serve you menu :)  "
 	},
 	"asking" : {
 			"type" : "text",
